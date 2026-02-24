@@ -1,0 +1,205 @@
+================================================================================
+  AUTOMATIC COPILOT EVALUATION – TA GRADING REPORT
+  Repository: DavidVCAI/AREP-Lab-1
+  Topic: Stellar Luminosity – Linear and Polynomial Regression from First Principles
+  Date: 2026-02-24
+================================================================================
+
+────────────────────────────────────────────────────────────────────────────────
+SUMMARY
+────────────────────────────────────────────────────────────────────────────────
+This submission is technically complete and well-executed. Both notebooks cover
+all mandatory deliverables: cost surface, convergence analysis, learning-rate
+experiments, feature-selection comparison (M1/M2/M3), interaction-term sweep,
+and an inference demo. The code is clean, correctly vectorized, and the
+mathematical derivations are properly stated. Domain knowledge is applied
+appropriately (L ~ M^3.5, Stefan-Boltzmann). The README describes SageMaker
+execution and includes a local-vs-cloud comparison table, with three screenshots
+as evidence. No prohibited libraries were detected; only NumPy and Matplotlib
+are imported. Minor shortcomings are noted below but do not materially reduce
+the quality of the work.
+
+────────────────────────────────────────────────────────────────────────────────
+GRADING BREAKDOWN  (0.0 – 5.0 scale)
+────────────────────────────────────────────────────────────────────────────────
+
+1. Repository Structure & Compliance ........... 0.5 / 0.5
+   - README.md present:                          YES
+   - Two notebooks present (Part I & Part II):   YES
+   - Datasets defined inside notebooks:          YES
+   - Only NumPy and Matplotlib used:             YES
+   - No deductions.
+
+2. Notebook 1 – Linear Regression ............. 1.9 / 2.0
+   - Dataset visualization & interpretation:    PRESENT – scatter plot with
+     explicit note about nonlinearity and L ~ M^3.5.
+   - Hypothesis & MSE implementation:           PRESENT – predict() and
+     compute_cost() correctly implemented.
+   - Cost surface (grid + 3D plot + contour
+     + explanation) [MANDATORY]:                PRESENT – both 3D surface and
+     contour with convexity interpretation.
+   - Gradient derivation (math + code):         PRESENT – partial derivatives
+     written in LaTeX and implemented in two forms.
+   - Non-vectorized gradient descent:           PRESENT – compute_gradients_loop()
+   - Vectorized gradient descent:              PRESENT – compute_gradients_vectorized()
+   - Convergence plot & discussion [MANDATORY]: PRESENT – linear and log-scale
+     plots with analysis.
+   - Learning-rate experiments (≥3) [MANDATORY]:PRESENT – 4 rates tested
+     (0.001, 0.01, 0.05, 0.1).
+   - Final fit plot & error discussion:         PRESENT – fit line + residual
+     bar chart with systematic-error discussion.
+   - Meaning of w (conceptual):                PRESENT – Section 10 Q1.
+   - Limits of linearity (conceptual):         PRESENT – Section 10 Q2.
+   - Deduction (-0.1): The convergence discussion is present but brief; a
+     sentence quantifying when the cost effectively plateaus and what residual
+     cost implies about model suitability would strengthen it.
+
+3. Notebook 2 – Polynomial Regression ......... 2.0 / 2.0
+   - Visualization with temperature encoding:  PRESENT – two scatter plots
+     with color/size encoding for T and M respectively.
+   - Feature engineering [M, T, M², M·T]:     PRESENT – build_features()
+     constructs all four features correctly.
+   - Vectorized loss & gradients:              PRESENT – matrix operations
+     X.T @ error and (1/2m)||error||^2.
+   - Training & convergence plot:              PRESENT – linear and log-scale
+     convergence for full model.
+   - Feature selection (M1, M2, M3) [MANDATORY]:PRESENT – cost comparison and
+     predicted-vs-actual scatter for all three models.
+   - Interaction cost analysis (w_MT sweep)
+     [MANDATORY]:                              PRESENT – parabolic cost curve
+     vs w_MT with optimal marked, physical interpretation included.
+   - Inference example & interpretation
+     [MANDATORY]:                              PRESENT – M=1.3, T=6600 K
+     prediction with reasonableness check against nearest training neighbors,
+     and a contextual scatter plot.
+   - No deductions.
+
+4. Cloud Execution Evidence (SageMaker) ........ 0.5 / 0.5
+   - Description of SageMaker execution:       PRESENT in README.
+   - Screenshots (notebooks visible):          PRESENT – screenshots/sagemaker_notebooks.png
+   - Screenshot (successful execution NB1):    PRESENT – screenshots/notebook1_execution.png
+   - Screenshot (successful execution NB2
+     + plot rendered):                         PRESENT – screenshots/notebook2_execution.png
+   - Local vs cloud comparison:               PRESENT – structured table in README.
+   - No deductions.
+
+────────────────────────────────────────────────────────────────────────────────
+FINAL GRADE
+────────────────────────────────────────────────────────────────────────────────
+Final grade: 4.9 / 5.0
+
+Result: PASS  (≥ 3.0 / 5.0)
+
+────────────────────────────────────────────────────────────────────────────────
+STRENGTHS
+────────────────────────────────────────────────────────────────────────────────
+• All mandatory deliverables are present and correctly implemented.
+• Clean, readable code with well-named functions and helpful docstrings.
+• Both non-vectorized and vectorized gradient implementations are provided and
+  numerically verified to match each other.
+• Feature scaling is correctly applied and consistently reused during inference,
+  which is a frequent source of error that was handled properly here.
+• Physical domain knowledge is integrated throughout (L ~ M^3.5,
+  Stefan-Boltzmann law, hydrostatic equilibrium reference), demonstrating
+  conceptual depth beyond the algorithmic requirements.
+• The inference demo correctly reconstructs the scaling statistics from the
+  training set before predicting, and validates the result against nearest
+  neighbors.
+• The interaction-term sweep (Section 8 of Notebook 2) is well-executed and
+  accompanied by clear physical interpretation.
+• README provides a professional local-vs-SageMaker comparison table and
+  multiple screenshots covering all required evidence categories.
+
+────────────────────────────────────────────────────────────────────────────────
+ISSUES & MISSING ELEMENTS
+────────────────────────────────────────────────────────────────────────────────
+• (Minor) Convergence discussion in Notebook 1 could be more quantitative:
+  e.g., specifying at which iteration cost effectively stops decreasing and
+  what the remaining cost value implies about the linear model's limitations.
+• (Minor) The learning-rate comparison plot uses a linear y-axis; a log-scale
+  version would more clearly show the difference between slow (alpha=0.001)
+  and fast (alpha=0.1) convergence.
+• (Observation) The M3 model still yields a non-negligible final cost on this
+  10-point dataset. A brief note acknowledging that even polynomial regression
+  struggles with data that follows a strict power law (and suggesting log-space
+  regression as a future step) would demonstrate additional critical thinking.
+• (Observation) No explicit discussion of overfitting risk for M3 given the
+  4 features and only 10 samples, though this is not strictly required by the
+  assignment rubric.
+
+────────────────────────────────────────────────────────────────────────────────
+TA FEEDBACK TO STUDENT
+────────────────────────────────────────────────────────────────────────────────
+Excellent submission overall. Your implementation covers every required element
+and the code is correct and well-organized. A few suggestions for improvement:
+
+1. Deepen your convergence analysis. Rather than simply noting that "cost
+   decreases rapidly and stabilizes," try to quantify this: report the
+   iteration at which the cost improvement drops below a threshold (e.g.,
+   < 0.01% per step), and discuss what the final residual cost tells you about
+   the adequacy of a linear model for this particular dataset.
+
+2. When comparing learning rates, consider adding a log-scale y-axis to your
+   convergence comparison plot. This makes the behavior of the slowest rates
+   visible and provides a clearer visual argument for your rate selection.
+
+3. As a stretch exercise, consider fitting the model in log-space
+   (i.e., log(L) vs log(M)) since the true relation is L ~ M^3.5. This would
+   illustrate the practical value of feature transformations beyond polynomial
+   expansion and would tie directly to the physical insight you already mention
+   in your notebooks.
+
+4. In Notebook 2, a brief discussion of the bias-variance trade-off between
+   M1, M2, and M3 would strengthen your model-comparison section.
+
+Overall, this is strong, technically accurate work. Keep up the rigor.
+
+────────────────────────────────────────────────────────────────────────────────
+AI-GENERATION ASSESSMENT  (NON-GRADING – INFORMATIVE ONLY)
+────────────────────────────────────────────────────────────────────────────────
+This section does NOT affect the final grade.
+
+A. Qualitative Assessment
+──────────────────────────
+Indicators consistent with AI-assisted generation:
+- Highly uniform explanation style across both notebooks and the README,
+  with consistent formatting and no informal asides or personal observations.
+- Near-complete coverage of every rubric item with no apparent gaps or
+  exploratory detours, suggesting a structured generation prompt rather than
+  organic development.
+- Print statements are structured as labeled report blocks ("CONVERGENCE
+  ANALYSIS:", "KEY FINDINGS:", etc.) – a pattern common in AI-generated
+  notebooks.
+- Explanations tend toward encyclopedic completeness (e.g., citing
+  hydrostatic equilibrium and the Stefan-Boltzmann law) without the partial
+  derivations or self-corrections typical of handwritten student notes.
+- Zero debugging artifacts, commented-out experiments, or exploratory cells.
+
+Indicators consistent with genuine student involvement:
+- Correct and consistent application of domain-specific physics (L ~ M^3.5)
+  throughout, which requires some subject-matter knowledge to validate.
+- The choice to scale features and reuse the exact training statistics during
+  inference is a subtle, practically correct detail that students often miss.
+- The SageMaker screenshots appear authentic and demonstrate that the
+  student executed the code in the required environment.
+- The physical interpretation of the interaction term M*T references the
+  Stefan-Boltzmann law in a contextually appropriate way.
+
+B. Quantitative Estimate
+─────────────────────────
+  Code:                   ~60 %  AI-assisted
+  Explanations / markdown: ~75 %  AI-assisted
+  README:                 ~70 %  AI-assisted
+
+C. Commentary
+──────────────
+The submission exhibits several hallmarks of heavy AI assistance: uniform
+prose quality, structured print-statement formatting, zero debugging traces,
+and complete coverage of all rubric points without exploratory detours. At the
+same time, the physical domain knowledge is applied correctly and the
+SageMaker execution appears genuine. The estimate above reflects a scenario
+where the student likely used an AI tool to scaffold the code and explanations,
+then adapted and executed the notebooks themselves.
+
+This assessment is observational and does not imply misconduct.
+================================================================================
